@@ -1,4 +1,4 @@
-package programmers.kakao2019blindrecruitment
+package programmers.kakao2019blindrecruitment.wayfinding_game
 
 class Solution42892 {
 
