@@ -5,17 +5,16 @@ import java.util.Scanner;
 
 public class _1_6_중복문자제거 {
 
-    public static String solution(String input) {
+    /**
+     * indexOf(str.charAt(i))를 사용하면 해당 문자가 나타나는 가장 첫 인덱스를 반환한다.
+     * 이를 이용해 이 인덱스와 현재 조사하는 인덱스 i가 같은지를 판별한다!!
+     */
+    public static String solution(String str) {
         StringBuilder answer = new StringBuilder();
-        ArrayList<Character> arrayList = new ArrayList<>();
 
-        for (char ch : input.toCharArray()) {
-            if (!arrayList.contains(ch))
-                arrayList.add(ch);
-        }
-
-        for(char ch : arrayList) {
-            answer.append(ch);
+        for (int i = 0; i < str.length(); i++) {
+            if(i == str.indexOf(str.charAt(i)))
+                answer.append(str.charAt(i));
         }
 
         return answer.toString();
