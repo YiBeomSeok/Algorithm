@@ -1,4 +1,4 @@
-package codinginterview;
+package coding_interview;
 
 public class Permutations {
     /**

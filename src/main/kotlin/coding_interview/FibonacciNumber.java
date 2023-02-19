@@ -1,4 +1,4 @@
-package codinginterview;
+package coding_interview;
 
 public class FibonacciNumber {
     int fib(int n) {
