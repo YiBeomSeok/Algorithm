@@ -12,6 +12,9 @@ class `변환`() {
     fun map() {
         // 숫자를 제곱으로 변환하여 출력
         number.map { n -> n * n }.forEach { println(it) }
+        // 1
+        // 4
+        // 9
     }
 
     /**
