@@ -3,24 +3,24 @@ package inflearn
 import java.util.*
 
 object `1_10 가장 짧은 문자거리` {
-    fun solution(s: String, t: Char): IntArray {
+    private fun solution(s: String, t: Char): IntArray {
         val answer = IntArray(s.length)
         var p = 1000
         for (i in s.indices) {
-            if (s[i] == t) {
+            if (s[i] == t)
                 p = 0
-            } else {
-                p += 1
-            }
+            else
+                p++
             answer[i] = p
         }
+
         p = 1000
-        for (i in s.length - 1 downTo 0) {
+        (s.length - 1 downTo 0).forEach { i ->
             if (s[i] == t) {
                 p = 0
             } else {
                 p += 1
-                answer[i] = Math.min(answer[i], p)
+                answer[i] = answer[i].coerceAtMost(p)
             }
         }
         return answer

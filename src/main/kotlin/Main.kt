@@ -1,7 +1,26 @@
+var apt = Array(15) { IntArray(15) }
 fun main(args: Array<String>) {
-    println("Hello World!")
+    val T = readln().toInt()
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+    for (i in 0 until T) {
+        val k = readln().toInt()
+        val n = readln().toInt()
+
+        println(countPerson(k, n))
+    }
+}
+
+fun countPerson(k: Int, n: Int): Int {
+    if (apt[k][n] != 0)
+        return apt[k][n]
+
+    if (k == 0) {
+        apt[k][n] = n
+        return n
+    }
+    if (n == 1) {
+        apt[k][n] = 1
+        return 1
+    }
+    return countPerson(k, n - 1) + countPerson(k - 1, n)
 }
