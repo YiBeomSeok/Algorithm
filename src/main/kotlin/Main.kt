@@ -1,26 +1,26 @@
-var apt = Array(15) { IntArray(15) }
-fun main(args: Array<String>) {
-    val T = readln().toInt()
+import java.util.Stack
 
-    for (i in 0 until T) {
-        val k = readln().toInt()
-        val n = readln().toInt()
+data class Node(
+    var isLive: Boolean = true,
+    var left: Node? = null,
+    var right: Node? = null,
+    var originLeft: Node? = null,
+    var originRight: Node? = null,
+) {
 
-        println(countPerson(k, n))
+}
+
+class Solution {
+
+    fun solution(n: Int, k: Int, cmd: Array<String>): String {
+        var answer = ""
+
+
+        return answer
     }
 }
 
-fun countPerson(k: Int, n: Int): Int {
-    if (apt[k][n] != 0)
-        return apt[k][n]
-
-    if (k == 0) {
-        apt[k][n] = n
-        return n
-    }
-    if (n == 1) {
-        apt[k][n] = 1
-        return 1
-    }
-    return countPerson(k, n - 1) + countPerson(k - 1, n)
+fun main() {
+    val sol = Solution()
+    println(sol.solution(8, 2, arrayOf("D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z")))
 }
