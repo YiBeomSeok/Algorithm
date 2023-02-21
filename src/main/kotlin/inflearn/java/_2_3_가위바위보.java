@@ -11,21 +11,20 @@ import java.util.StringTokenizer;
 public class _2_3_가위바위보 {
 
     private static String match(int a, int b) throws InvalidParameterException{
-        if(a == 1) {
-            if(b == 1) return "D";
-            else if(b == 2) return "B";
-            else if(b == 3) return "A";
-        }
-        else if(a == 2) {
-            if(b == 1) return "A";
-            else if(b == 2) return "D";
-            else if(b == 3) return "B";
-        }
-        else if(a == 3) {
-            if(b == 1) return "B";
-            else if(b == 2) return "A";
-            else if(b == 3) return "D";
-        }
+        // 비기는 경우
+        if(a == b) return "D";
+        // A가 이기는 경우
+        if(a == 1 && b == 3) return "A";
+        if(a == 2 && b == 1) return "A";
+        if(a == 3 && b == 2) return "A";
+        // B가 이기는 경우
+        // return "B"; //이렇게 끝나도 충분하지만
+        // 만일 a == 2 && b == 1 의 경우를 생각하지 못한 상태여서 작성하지 않았다면
+        // `A가 이기는 경우`임에도 "B"를 반환하는 상황이 생긴다.
+        // 그래서 실제로는 `else`를 함부로 사용하면 안 되는 것 같다.
+        if(b == 1 && a == 3) return "B";
+        if(b == 2 && a == 1) return "B";
+        if(b == 3 && a == 2) return "B";
 
         throw new InvalidParameterException();
     }
