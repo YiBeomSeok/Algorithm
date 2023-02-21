@@ -6,7 +6,7 @@ import java.io.InputStreamReader
 import java.security.InvalidParameterException
 import java.util.*
 
-object `3_3 가위바위보` {
+object `2_3 가위바위보` {
     @Throws(InvalidParameterException::class)
     private fun match(a: Int, b: Int): String {
         if (a == 1) {

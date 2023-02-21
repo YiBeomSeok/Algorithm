@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class _3_3_가위바위보 {
+public class _2_3_가위바위보 {
 
     private static String match(int a, int b) throws InvalidParameterException{
         if(a == 1) {
