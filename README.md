@@ -1,5 +1,11 @@
 ## ✍️ YiBeomSeok
 
+🐈‍ Effective Kotlin  
+🐘 Coding Interview  
+🦡 Boostcourse Kotlin Programming  
+
+🦕 BOJ, Codewars, programmers  
+
 ![Codewars](https://github.r2v.ch/codewars?user=YiBeomSeok&stroke=%23BB432C)
 
 [![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=vv99911)](https://solved.ac/vv99911/)
