@@ -158,3 +158,4 @@ replay_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,kotlin
 .idea/misc.xml
+out/production/kotlin-algorithm/META-INF/kotlin-algorithm.kotlin_module
