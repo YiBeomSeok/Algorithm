@@ -31,7 +31,7 @@ public class _2_12_멘토링 {
         int n, m;
         st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st. nextToken());
 
         int[][] input = new int[m][n];
         for(int i = 0; i < m; i++) {
