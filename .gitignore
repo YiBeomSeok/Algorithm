@@ -161,3 +161,4 @@ replay_pid*
 out/production/kotlin-algorithm/META-INF/kotlin-algorithm.kotlin_module
 kotlin-algorithm.iml
 src/main/kotlin/KoMain.kt
+src/main/kotlin/Main.java
