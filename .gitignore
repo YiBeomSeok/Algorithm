@@ -1,4 +1,4 @@
-
+src/main/kotlin/Main.java
 src/main/kotlin/KoMain.kt
 
 # Created by https://www.toptal.com/developers/gitignore/api/intellij,java,kotlin
@@ -160,5 +160,4 @@ replay_pid*
 .idea/misc.xml
 out/production/kotlin-algorithm/META-INF/kotlin-algorithm.kotlin_module
 kotlin-algorithm.iml
-src/main/kotlin/KoMain.kt
-src/main/kotlin/Main.java
+
