@@ -1,6 +1,5 @@
 package inflearn
 
-import inflearn.java._1_8_유효한_팰린드롬
 import java.util.*
 
 object `1_8 유효한 팰린드롬` {

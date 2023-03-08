@@ -1,6 +1,6 @@
 package inflearn
 
-import inflearn.java._5_1_올바른_괄호
+import inflearn.java.ch05._5_1_올바른_괄호
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
