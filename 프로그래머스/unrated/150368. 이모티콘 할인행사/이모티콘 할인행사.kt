@@ -1,11 +1,11 @@
 class Solution {
-    var resultSellCount = 0
-    var resultTotalPrice = 0
-    lateinit var emoticons: IntArray
-    lateinit var users: Array<IntArray>
+    private var resultSellCount = 0
+    private var resultTotalPrice = 0
+    private lateinit var emoticons: IntArray
+    private lateinit var users: Array<IntArray>
     fun solution(users: Array<IntArray>, emoticons: IntArray): IntArray {
-        this.emoticons = emoticons.copyOf()
-        this.users = users.copyOf()
+        this.emoticons = emoticons
+        this.users = users
 
         val rates = IntArray(emoticons.size)
         permutation(10, 40, rates, 0)
@@ -21,7 +21,7 @@ class Solution {
             var caseBuyPrice = 0
 
             for (i in discountRates.indices)
-                discounted[i] = ((emoticons[i] * ((100 - discountRates[i]))) / 100)
+                discounted[i] = emoticons[i] * (100 - discountRates[i]) / 100
 
             for (userIndex in users.indices) {
                 val curUser = users[userIndex]
