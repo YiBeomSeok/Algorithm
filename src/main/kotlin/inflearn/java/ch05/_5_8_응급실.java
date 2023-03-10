@@ -23,27 +23,30 @@ public class _5_8_응급실 {
     }
 
     public static int solution(int n, int m, int[] risk) {
-        int answer = 0;
-        Queue<Patient> pQueue = new ArrayDeque<>();
+        Queue<Patient> patients = new ArrayDeque<>();
         for(int i = 0; i < n; i++) {
-            pQueue.offer(new Patient(i, risk[i]));
+            Patient patient = new Patient(i, risk[i]);
+            patients.offer(patient);
         }
 
-        while(!pQueue.isEmpty()) {
-            Patient tmp = pQueue.poll();
-            for(Patient x : pQueue) {
-                if(x.risk > tmp.risk) {
-                    pQueue.offer(tmp);
-                    tmp = null;
-                    break;
-                }
-            }
-            if(tmp != null) {
-                answer++;
-                if(tmp.id == m) return answer;
+        int count = 0;
+        while(!patients.isEmpty()) {
+            Patient patient = patients.poll();
+            if(hasMoreLisk(patient, patients)) {
+                patients.offer(patient);
+            } else {
+                count++;
+                if(patient.id == m) return count;
             }
         }
-        return answer;
+        return count;
+    }
+
+    private static boolean hasMoreLisk(Patient patient, Queue<Patient> patients) {
+        for(Patient p : patients) {
+            if(p.risk > patient.risk) return true;
+        }
+        return false;
     }
 }
 
