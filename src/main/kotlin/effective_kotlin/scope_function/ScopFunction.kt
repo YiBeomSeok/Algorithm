@@ -1,7 +1,5 @@
 package effective_kotlin.scope_function
 
-import effective_kotlin.User
-
 fun main() {
     //let, run, apply, also  with
     //1. let
@@ -11,7 +9,7 @@ fun main() {
     // }
     val a = 3
     a.let {  }
-    var user : User? = User("채상아", 10, true)
+    var user : User? = User("이범석", 28, true)
     val age = user?.let {
         it.age
     }
