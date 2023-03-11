@@ -8,7 +8,7 @@ data class User(
 }
 
 fun main() {
-//    val user = User("Maja", "Ma")
+//    val user = effective_kotlin.scope_function.User("Maja", "Ma")
 //    user = user.withSurname("Moskala")  // But 이 방식은 매우 귀찮
 
     // 다음과 같은 방법 권장
