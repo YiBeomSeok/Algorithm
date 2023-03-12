@@ -1,3 +1,10 @@
+/*
+에라토네스의 체 알고리즘을 알아야 풀 수 있다. 
+또한 에라토네스의 체 알고리즘 중,
+O(N)의 시간복잡도를 가지는 풀이법을 사용해야 시간 제한을 통과할 수 있으니
+본인이 알고 있는 `에라토네스의 체`의 시간복잡도는 어떻게 되는지 미리 확인하는 것이 좋겠다.
+*/
+
 fun getPrimes(n: Int): List<Int> {
     val isPrime = BooleanArray(n+1) { true }
     val primes = mutableListOf<Int>()
