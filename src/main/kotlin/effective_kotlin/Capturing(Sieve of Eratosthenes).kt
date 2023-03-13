@@ -20,6 +20,37 @@ fun solution() {
     print(primes.joinToString(" "))
 }
 
+val primes: Sequence<Int> = sequence {
+    var numbers = generateSequence(2) { it + 1 }
+
+    while (true) {
+        val prime = numbers.first()
+        yield(prime)
+        numbers = numbers.drop(1).filter { it % prime != 0 }
+    }
+}
+
+// O(N) 시간복잡도. 가장 효율적임.
+fun getPrimes(n: Int): List<Int> {
+    val isPrime = BooleanArray(n+1) { true }
+    val primes = mutableListOf<Int>()
+
+    for (i in 2..n) {
+        if (isPrime[i]) {
+            primes.add(i)
+        }
+
+        for (j in primes.indices) {
+            val k = i * primes[j]
+            if (k > n) break
+            isPrime[k] = false
+            if (i % primes[j] == 0) break
+        }
+    }
+
+    return primes
+}
+
 fun main() {
     solution()
 }
