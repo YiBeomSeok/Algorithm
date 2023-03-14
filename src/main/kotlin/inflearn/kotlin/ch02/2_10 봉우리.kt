@@ -1,4 +1,4 @@
-package inflearn
+package inflearn.kotlin.ch02
 
 object `2_10 봉우리` {
 

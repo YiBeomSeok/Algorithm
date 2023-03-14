@@ -1,4 +1,4 @@
-package inflearn
+package inflearn.kotlin
 
 import inflearn.java.ch05_stack_queue._5_1_올바른_괄호
 import java.io.BufferedReader

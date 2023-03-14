@@ -1,4 +1,4 @@
-package inflearn
+package inflearn.kotlin.ch02
 
 import java.util.*
 

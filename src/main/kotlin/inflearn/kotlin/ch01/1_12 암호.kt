@@ -1,4 +1,4 @@
-package inflearn
+package inflearn.kotlin.ch01
 
 object `1_12 암호` {
     fun solution(n: Int, s: String): String? {
