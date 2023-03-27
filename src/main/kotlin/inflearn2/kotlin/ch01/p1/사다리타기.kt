@@ -1,6 +1,4 @@
-package inflearn2.kotlin.ch01
-
-import java.util.Arrays
+package inflearn2.kotlin.ch01.p1
 
 class Solution {
     fun solution(n: Int, ladder: Array<IntArray>): CharArray {
