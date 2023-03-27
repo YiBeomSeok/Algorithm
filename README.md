@@ -3,7 +3,7 @@
 🐈‍ Effective Kotlin  
 🐘 Coding Interview  
 🦡 Boostcourse Kotlin Programming  
-🦕 BOJ, Codewars, programmers  
+🦕 BOJ, Codewars, Programmers  
 
 ![Codewars](https://github.r2v.ch/codewars?user=YiBeomSeok&stroke=%23BB432C)
 
