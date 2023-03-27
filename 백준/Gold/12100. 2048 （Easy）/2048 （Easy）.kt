@@ -25,9 +25,9 @@ class Solution(val n: Int, val board: Array<IntArray>) {
     }
 
     fun isNotEqual(curBoard: Array<IntArray>, nextBoard: Array<IntArray>): Boolean {
-        for(i in 0 until n) {
-            for(j in 0 until n) {
-                if(curBoard[i][j] != nextBoard[i][j]) return true
+        for (i in 0 until n) {
+            for (j in 0 until n) {
+                if (curBoard[i][j] != nextBoard[i][j]) return true
             }
         }
         return false
@@ -113,76 +113,76 @@ class Solution(val n: Int, val board: Array<IntArray>) {
     }
 
     fun movedBoard(curBoard: Array<IntArray>, dir: Int): Array<IntArray> {
-    val nextBoard = Array(n) { IntArray(n) }
-    for (i in 0 until n) {
-        nextBoard[i] = curBoard[i].clone()
-    }
-    // 해당 방향으로 미는 작업부터
-    pushBoard(nextBoard, dir)
+        val nextBoard = Array(n) { IntArray(n) }
+        for (i in 0 until n) {
+            nextBoard[i] = curBoard[i].clone()
+        }
+        // 해당 방향으로 미는 작업부터
+        pushBoard(nextBoard, dir)
 
-    when (dir) {
-        0 -> {
-            for (y in 0 until n) {
-                var x = n - 1
-                while (x >= 1) {
-                    if (nextBoard[y][x - 1] == nextBoard[y][x]) {
-                        nextBoard[y][x] *= 2
-                        nextBoard[y][x - 1] = 0
+        when (dir) {
+            0 -> {
+                for (y in 0 until n) {
+                    var x = n - 1
+                    while (x >= 1) {
+                        if (nextBoard[y][x - 1] == nextBoard[y][x]) {
+                            nextBoard[y][x] *= 2
+                            nextBoard[y][x - 1] = 0
+                            x--
+                        }
                         x--
                     }
-                    x--
                 }
             }
-        }
 
-        1 -> {
-            for (x in 0 until n) {
-                var y = n - 1
-                while (y >= 1) {
-                    if (nextBoard[y - 1][x] == nextBoard[y][x]) {
-                        nextBoard[y][x] *= 2
-                        nextBoard[y - 1][x] = 0
+            1 -> {
+                for (x in 0 until n) {
+                    var y = n - 1
+                    while (y >= 1) {
+                        if (nextBoard[y - 1][x] == nextBoard[y][x]) {
+                            nextBoard[y][x] *= 2
+                            nextBoard[y - 1][x] = 0
+                            y--
+                        }
                         y--
                     }
-                    y--
                 }
+
             }
 
-        }
-
-        2 -> {
-            for (y in 0 until n) {
-                var x = 0
-                while (x < n - 1) {
-                    if (nextBoard[y][x + 1] == nextBoard[y][x]) {
-                        nextBoard[y][x] *= 2
-                        nextBoard[y][x + 1] = 0
+            2 -> {
+                for (y in 0 until n) {
+                    var x = 0
+                    while (x < n - 1) {
+                        if (nextBoard[y][x + 1] == nextBoard[y][x]) {
+                            nextBoard[y][x] *= 2
+                            nextBoard[y][x + 1] = 0
+                            x++
+                        }
                         x++
                     }
-                    x++
                 }
+
             }
 
-        }
-
-        3 -> {
-            for (x in 0 until n) {
-                var y = 0
-                while (y < n - 1) {
-                    if (nextBoard[y + 1][x] == nextBoard[y][x]) {
-                        nextBoard[y][x] *= 2
-                        nextBoard[y + 1][x] = 0
+            3 -> {
+                for (x in 0 until n) {
+                    var y = 0
+                    while (y < n - 1) {
+                        if (nextBoard[y + 1][x] == nextBoard[y][x]) {
+                            nextBoard[y][x] *= 2
+                            nextBoard[y + 1][x] = 0
+                            y++
+                        }
                         y++
                     }
-                    y++
                 }
-            }
 
+            }
         }
+        pushBoard(nextBoard, dir)
+        return nextBoard
     }
-    pushBoard(nextBoard, dir)
-    return nextBoard
-}
 
 }
 
