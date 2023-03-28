@@ -1,78 +1,85 @@
-import java.util.StringTokenizer
+import java.util.*
 
 class Solution {
-    var count = 0
-    fun lower_bound(arrNum: ArrayList<Int>, score: Int): Int {
 
-        var low = 0
-        var high = arrNum.size - 1
-        while (low <= high) {
-            var mid = (low + high) / 2
-            if (arrNum[mid] < score) {
-                low = mid + 1
-            } else {
-                high = mid - 1
-            }
-        }
-        return arrNum.size - low
-    }
-
-    fun dfs(
-        infoMap: MutableMap<String, ArrayList<Int>>,
-        word: Array<Array<String>>,
-        score: Int,
-        sentence: String,
-        cnt: Int
-    ) {
-        if (cnt == 4) {
-            count++
-            if (infoMap[sentence] == null) {
-                infoMap.put(sentence, ArrayList<Int>())
-            }
-            infoMap[sentence]?.add(score)
-            return
-        }
-        dfs(infoMap, word, score, sentence + word[cnt][0], cnt + 1)
-        dfs(infoMap, word, score, sentence + word[cnt][1], cnt + 1)
-    }
+    private lateinit var infos: MutableMap<String, MutableList<Int>>
 
     fun solution(info: Array<String>, query: Array<String>): IntArray {
         var answer = IntArray(query.size)
-        var infoMap = mutableMapOf<String, ArrayList<Int>>()
-        for (sen in info) {
-            val tk = StringTokenizer(sen)
-            val word = Array<Array<String>>(4) { Array<String>(2) { "-" } }
-            for (i in 0 until 4) {
-                word[i][0] = tk.nextToken()
-            }
-            val score = Integer.parseInt(tk.nextToken())
-            dfs(infoMap, word, score, "", 0)
-            count = 0
-        }
-        for (i in infoMap) {
-            i.value.sort()
-        }
 
-        //쿼리별 검색
-        for (i in query.indices) {
-            val tk = StringTokenizer(query[i])
-            var sentence = ""
+        initInfos(info)
 
-            for (j in 0 until 8) {
-                val str = tk.nextToken()
-                if (j % 2 == 0)
-                    sentence += str
+        val queryLen = query.size
+        for(i in 0 until queryLen) {
+            val st = StringTokenizer(query[i])
+            var cmd = ""
+
+            for(j in 0 until 8) {
+                val str = st.nextToken()
+                if(j % 2 == 0)
+                    cmd += str
                 else if (j == 7) {
-                    if (infoMap[sentence] == null) {
+                    if(infos[cmd] == null) {
                         answer[i] = 0
                     } else {
-                        answer[i] = lower_bound(infoMap[sentence]!!, Integer.parseInt(str))
+                        answer[i] = binarySearch(infos[cmd]!!, str.toInt())
                     }
                 }
-
             }
-
         }
+
         return answer
+    }
+
+    private fun binarySearch(infoFinding: MutableList<Int>, targetScore: Int): Int {
+        val size = infoFinding.size
+
+        var left = 0
+        var right = size - 1
+
+        while(left <= right) {
+            val mid = (right + left) / 2
+
+            if(infoFinding[mid] < targetScore) {
+                left = mid + 1
+            } else {
+                right = mid - 1
+            }
+        }
+
+        return size - left
+    }
+
+    private fun initInfos(info: Array<String>) {
+        infos = mutableMapOf()
+
+        for(element in info) {
+            val st = StringTokenizer(element)
+            val word = Array<Array<String>>(4) { Array<String>(2) { "-" } }
+            for(i in 0 until 4) {
+                word[i][0] = st.nextToken()
+            }
+            val score = st.nextToken().toInt()
+
+            dfsForInitInfos("", word, score, 0)
+        }
+
+        infos.forEach {
+            it.value.sort()
+        }
+    }
+
+    private fun dfsForInitInfos(curInfo: String, word: Array<Array<String>>, score: Int, depth: Int) {
+        if(depth == 4) {
+            if(infos.contains(curInfo)) {
+                infos[curInfo]!!.add(score)
+            } else {
+                infos[curInfo] = mutableListOf()
+                infos[curInfo]!!.add(score)
+            }
+        } else {
+            dfsForInitInfos(curInfo + word[depth][0], word, score, depth + 1)
+            dfsForInitInfos(curInfo + word[depth][1], word, score, depth + 1)
+        }
     }
 }
