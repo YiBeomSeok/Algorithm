@@ -9,6 +9,48 @@ class Solution {
     val dx = intArrayOf(0, 1, 1, 1, 0, -1, -1, -1)
     val dy = intArrayOf(-1, -1, 0, 1, 1, 1, 0, -1)
 
+    fun solution2(keypad: IntArray, password: String): Int {
+        var answer = 0
+        val dx = intArrayOf(-1, -1, 0, 1, 1, 1, 0, -1)
+        val dy = intArrayOf(0, 1, 1, 1, 0, -1, -1, -1)
+        val pad = Array(3) { IntArray(3) }
+        val dist = Array(10) { IntArray(10) }
+
+        for (i in 0..2) {
+            for (j in 0..2) {
+                pad[i][j] = keypad[i * 3 + j]
+            }
+        }
+
+        for (i in 0..9) {
+            dist[i].fill(2)
+        }
+
+        for (i in 0..9) {
+            dist[i][i] = 0
+        }
+
+        for (i in 0..2) {
+            for (j in 0..2) {
+                val from = pad[i][j]
+                for (k in 0..7) {
+                    if (i + dx[k] >= 0 && i + dx[k] < 3 && j + dy[k] >= 0 && j + dy[k] < 3) {
+                        val to = pad[i + dx[k]][j + dy[k]]
+                        dist[from][to] = 1
+                    }
+                }
+            }
+        }
+
+        for (i in 1 until password.length) {
+            val from = password[i - 1] - '0'
+            val to = password[i] - '0'
+            answer += dist[from][to]
+        }
+
+        return answer
+    }
+
     fun solution(keypad: IntArray, password: String): Int {
         val check = Array(10) { IntArray(10) { Int.MAX_VALUE } }
 
