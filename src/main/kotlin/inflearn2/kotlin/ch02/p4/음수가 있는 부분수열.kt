@@ -2,7 +2,20 @@ package inflearn2.kotlin.ch02.p4
 
 class Solution {
     fun solution(nums: IntArray, m: Int): Int {
-        return 0
+        var answer = 0
+
+        val hashMap = HashMap<Int, Int>()
+        hashMap[0] = 1
+        var sum = 0
+
+        for(i in nums.indices) {
+            sum += nums[i]
+
+            answer += hashMap.getOrDefault(sum - m, 0)
+            hashMap[sum] = hashMap.getOrDefault(sum, 0) + 1
+        }
+
+        return answer
     }
 }
 
