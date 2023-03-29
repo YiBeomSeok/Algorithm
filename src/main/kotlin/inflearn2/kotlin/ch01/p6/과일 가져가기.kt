@@ -1,3 +1,4 @@
+package inflearn2.kotlin.ch01.p6
 class Solution {
     fun solution(fruit: Array<IntArray>): Int {
         var answer = 0

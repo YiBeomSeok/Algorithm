@@ -2,6 +2,12 @@ package inflearn2.kotlin.ch02.p3
 
 class Solution {
     fun solution(s: String): Int {
+        val hashMap = HashMap<Char, Int>()
+
+        s.forEach {
+            hashMap[it] = hashMap.getOrDefault(it, 0) + 1
+        }
+        
         return 0
     }
 }

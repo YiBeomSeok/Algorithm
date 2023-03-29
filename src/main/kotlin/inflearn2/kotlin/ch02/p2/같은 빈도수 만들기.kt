@@ -4,7 +4,20 @@ import java.util.*
 
 class Solution {
     fun solution(s: String): IntArray {
-        return IntArray(5)
+        val hashMap = HashMap<Char, Int>()
+
+        var max = 0
+        s.forEach {
+            hashMap[it] = hashMap.getOrDefault(it, 0) + 1
+            max = maxOf(hashMap.getOrDefault(it, 0), max)
+        }
+
+        val answer = IntArray(5)
+        for(i in 0 until 5) {
+            answer[i] = max - hashMap.getOrDefault('a' + i, 0)
+        }
+
+        return answer
     }
 }
 
