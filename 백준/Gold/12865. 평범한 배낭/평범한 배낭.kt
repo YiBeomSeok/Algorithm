@@ -1,32 +1,39 @@
-import kotlin.math.max
 
-data class Item(val weight: Int, val value: Int)
+import java.io.*
+import java.util.*
+
+val br = BufferedReader(InputStreamReader(System.`in`))
+
+class Solution(val n: Int, val m: Int, val inputs: Array<IntArray>) {
+    fun solution(): Int {
+        val dp = IntArray(m + 1) { 0 }
+
+        for(i in 0 until n) {
+            val weightNeeded = inputs[i][0]
+            val value = inputs[i][1]
+            for(j in m downTo weightNeeded) {
+                if(dp[j - weightNeeded] + value > dp[j]) {
+                    dp[j] = dp[j - weightNeeded] + value
+                }
+            }
+        }
+
+        return dp[m]
+    }
+}
 
 fun main() {
-    val (n, maxWeight) = readLine()!!.split(" ").map { it.toInt() }
-    val items = Array<Item>(n + 1) { Item(0, 0) }
+    var st = StringTokenizer(br.readLine())
+    val n = st.nextToken().toInt()
+    val m = st.nextToken().toInt()
 
-    repeat(n) {
-        val (weight, value) = readLine()!!.split(" ").map { num -> num.toInt() }
-        items[it + 1] = Item(weight, value)
-    }
-    items.sortBy { it.weight }
-
-    val dp = Array<IntArray>(n + 1) { IntArray(maxWeight + 1) { 0 } }
-
-    for (i in 1..n) {
-        for (w in 1..maxWeight) {
-            val currentItem = items[i]
-            val weight = currentItem.weight
-            val value = currentItem.value
-
-            dp[i][w] = dp[i - 1][w]
-
-            if (w >= weight) {
-                dp[i][w] = max(dp[i][w], dp[i - 1][w - weight] + value)
-            }
+    val inputs = Array(n) {
+        st = StringTokenizer(br.readLine())
+        IntArray(2) {
+            st.nextToken().toInt()
         }
     }
 
-    print(dp[n][maxWeight])
+    val sol = Solution(n, m, inputs)
+    print(sol.solution())
 }
