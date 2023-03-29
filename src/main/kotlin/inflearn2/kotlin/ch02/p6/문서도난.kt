@@ -4,7 +4,31 @@ import java.util.*
 
 class Solution {
     fun solution(reports: Array<String>, times: String): Array<String> {
-        return arrayOf()
+        var stringTokenizer = StringTokenizer(times)
+        val first = stringTokenizer.nextToken()
+        val second = stringTokenizer.nextToken()
+
+        val startTime = getMin(first)
+        val endTime = getMin(second)
+
+        val timePerson = TreeMap<Int, String>()
+
+        for(report in reports) {
+           stringTokenizer = StringTokenizer(report)
+           val name = stringTokenizer.nextToken()
+           val time = getMin(stringTokenizer.nextToken())
+
+           if(time in startTime .. endTime) {
+               timePerson[time] = name
+           }
+        }
+
+        return timePerson.values.toTypedArray()
+    }
+
+    private fun getMin(time: String): Int {
+        val split = time.split(":")
+        return split[0].toInt() * 60 + split[1].toInt()
     }
 }
 

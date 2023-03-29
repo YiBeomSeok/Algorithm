@@ -1,8 +1,38 @@
 package inflearn2.kotlin.ch02.p5
 
+import java.util.*
+
 class Solution {
     fun solution(votes: Array<String>, k: Int): String {
-        return " "
+        val candidates = HashMap<String, MutableList<String>>()
+        val persons = TreeMap<String, Int>()
+
+        for(i in votes.indices) {
+            val st = StringTokenizer(votes[i])
+            val from = st.nextToken()
+            val to = st.nextToken()
+
+            candidates[to] = candidates.getOrDefault(to, mutableListOf()).apply {
+                this.add(from)
+            }
+        }
+
+        var maxGiftCount = 0
+        for(candidate in candidates) {
+            if(candidate.value.size >= k) {
+                for(voter in candidate.value) {
+                    val giftCount = persons.getOrDefault(voter, 0) + 1
+                    persons[voter] = giftCount
+                    maxGiftCount = maxOf(maxGiftCount, giftCount)
+                }
+            }
+        }
+
+        var answer = " "
+        persons.forEach {
+            if(it.value == maxGiftCount) return it.key
+        }
+        return answer
     }
 }
 
