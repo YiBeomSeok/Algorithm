@@ -1,8 +1,26 @@
 package inflearn2.kotlin.ch03.p1
 
+import java.util.*
+
 class Solution {
     fun solution(nums: IntArray): Int {
-        return 0
+        val sortedSet = TreeSet<Int>()
+        nums.forEach { sortedSet.add(it) }
+
+        var prev = sortedSet.first()
+        var count = 1
+        var answer = 1
+        sortedSet.remove(prev)
+        sortedSet.forEach {
+            if(prev + 1 == it) {
+                count++
+                prev = it
+                answer = maxOf(answer, count)
+            }
+            else count = 1
+        }
+
+        return answer
     }
 }
 
