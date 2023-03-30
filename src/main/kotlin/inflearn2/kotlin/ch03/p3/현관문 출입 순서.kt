@@ -4,7 +4,56 @@ import java.util.*
 
 class Solution {
     fun solution(arrival: IntArray, state: IntArray): IntArray {
-        return intArrayOf()
+        val n = arrival.size
+        val enter = ArrayDeque<Int>()
+        val exit = ArrayDeque<Int>()
+        var prev = 1
+        val answer = IntArray(n)
+
+        var t = 0
+        var i = 0
+        var cnt = 0
+        while(true) {
+            if(enter.isEmpty() && exit.isEmpty() && i < n) {
+                if(t < arrival[i]) {
+                    t = arrival[i]
+                    prev = 1
+                }
+            }
+
+            while(i < n && arrival[i] <= t) {
+                if(state[i] == 0) enter.addLast(i)
+                else exit.addLast(i)
+                i++
+            }
+
+            if(prev == 1) {
+                if(exit.isNotEmpty()) {
+                    answer[exit.removeFirst()] = t
+                    prev = 1
+                }
+                else {
+                    answer[enter.removeFirst()] = t
+                    prev = 0
+                }
+            } else if(prev == 0) {
+                if(enter.isNotEmpty()) {
+                    answer[enter.removeFirst()] = t
+                    prev = 0
+                } else {
+                    answer[exit.removeFirst()] = t
+                    prev = 1
+                }
+            }
+            cnt++
+            if(cnt == n) break
+            //
+            t++
+        }
+
+
+
+        return answer
     }
 }
 
