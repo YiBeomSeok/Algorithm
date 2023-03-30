@@ -4,7 +4,28 @@ import java.util.*
 
 class Solution {
     fun solution(reports: Array<String>, time: Int): Array<String> {
-        return arrayOf()
+        val history = HashMap<String, Int>()
+        val answer = mutableListOf<String>()
+        for(report in reports) {
+            val split = report.split(" ")
+
+            val name = split[0]
+            val minTime = getMinute(split[1])
+
+            if(history.contains(name)) {
+                if(minTime - history[name]!! > time) answer.add(name)
+                history.remove(name)
+            } else {
+                history[name] = minTime
+            }
+        }
+
+        return answer.toTypedArray().apply { sort() }
+    }
+
+    private fun getMinute(time: String): Int {
+        val split = time.split(":")
+        return split[0].toInt() * 60 + split[1].toInt()
     }
 }
 
