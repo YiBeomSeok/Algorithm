@@ -2,7 +2,39 @@ package inflearn2.kotlin.ch05.p6
 
 class Solution {
     fun solution(n: Int, trans: Array<IntArray>, bookings: Array<IntArray>): Int {
-        return 0
+        val capacity = IntArray(n + 1)
+        trans.forEach {
+            capacity[it[0]] += it[2]
+            capacity[it[1]] -= it[2]
+        }
+        bookings.sortBy { it[0] }
+
+        for (i in 1..n) {
+            capacity[i] += capacity[i - 1]
+        }
+
+        val passengers = mutableListOf<Int>()
+        var answer = 0
+        var j = 0
+        for (i in 1..n) {
+            while (passengers.isNotEmpty() && passengers[0] == i) {
+                passengers.removeAt(0)
+                answer++
+
+            }
+
+            while (j < bookings.size && bookings[j][0] == i) {
+                passengers.add(bookings[j][1])
+                j++
+            }
+
+            passengers.sort()
+            while (passengers.size > capacity[i]) {
+                passengers.removeLast()
+            }
+        }
+
+        return answer
     }
 }
 
