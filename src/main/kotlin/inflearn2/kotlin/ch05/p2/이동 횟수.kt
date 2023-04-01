@@ -2,7 +2,19 @@ package inflearn2.kotlin.ch05.p2
 
 class Solution {
     fun solution(nums: IntArray): Int {
-        return 0
+        nums.sort()
+        var left = 0
+        var right = nums.size - 1
+        var count = 0
+        while(left <= right) {
+            if(nums[left] + nums[right] <= 5) {
+                left++
+            }
+            count++
+
+            right--
+        }
+        return count
     }
 }
 
