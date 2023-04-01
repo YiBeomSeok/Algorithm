@@ -1,8 +1,31 @@
 package inflearn2.kotlin.ch05.p3
 
+import java.util.*
+
 class Solution {
     fun solution(n: Int, nums: IntArray): Int {
-        return 0
+        val pq = PriorityQueue<Int>(compareByDescending { it })
+        nums.forEach {
+            pq.offer(it)
+        }
+
+        var i = 0
+        var count = 0
+        while(i < n) {
+            if(i + nums[i] >= n - 1) break
+            val next = if(i + pq.peek() >= n) n - 1 else i + pq.peek()
+            for(j in next downTo i) {
+                if(j - nums[j] <= i) {
+                    i = j
+                    count++
+                    pq.remove(nums[j])
+                    break
+                }
+                if(j == i && nums[i] == 0) return -1
+            }
+        }
+
+        return count
     }
 }
 
