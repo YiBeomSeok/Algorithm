@@ -5,7 +5,38 @@ import java.util.*
 class Solution {
     fun solution(students: Array<String>): IntArray {
         val n = students.size
-        return IntArray(n)
+        val answer = IntArray(n)
+
+        val mStudents = mutableListOf<Student>()
+        for(i in students.indices) {
+            val split = students[i].split(" ")
+            mStudents.add(Student(i, split[0], split[1].toInt()))
+        }
+
+        mStudents.sort()
+
+        var total = 0
+        val teamDamageChecks = HashMap<String, Int>()
+
+        var i = 1
+        var j = 0
+        while(i < n) {
+            while(j < n && mStudents[j].damage < mStudents[i].damage) {
+                total += mStudents[j].damage
+                teamDamageChecks[mStudents[j].team] = teamDamageChecks.getOrDefault(mStudents[j].team, 0) + mStudents[j].damage
+                j++
+            }
+            answer[mStudents[i].num] = total - teamDamageChecks.getOrDefault(mStudents[i].team, 0)
+            i++
+        }
+
+        return answer
+    }
+
+    class Student(val num: Int, val team: String, val damage: Int) : Comparable<Student>{
+        override fun compareTo(other: Student): Int {
+            return this.damage - other.damage
+        }
     }
 }
 
