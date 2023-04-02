@@ -1,8 +1,43 @@
 package inflearn2.kotlin.ch06.p2
 
 class Solution {
+
+    lateinit var hate: Array<BooleanArray>
+    lateinit var visited: BooleanArray
+    var answer = 0
+
     fun solution(fight: Array<IntArray>): Int {
-        return 0
+
+        init(fight)
+
+        dfs(0, 0)
+
+        return answer
+    }
+
+    private fun init(fight: Array<IntArray>) {
+        hate = Array(8) { BooleanArray(8) { false } }
+        visited = BooleanArray(8) { false }
+        answer = 0
+
+        fight.forEach {
+            hate[it[0]][it[1]] = true
+            hate[it[1]][it[0]] = true
+        }
+    }
+
+    private fun dfs(prev: Int, depth: Int) {
+        if (depth == 7) {
+            answer++
+        } else {
+            for (i in 1..7) {
+                if (hate[prev][i] || visited[i]) continue
+
+                visited[i] = true
+                dfs(i, depth + 1)
+                visited[i] = false
+            }
+        }
     }
 }
 
