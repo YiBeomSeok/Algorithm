@@ -1,8 +1,42 @@
 package inflearn2.kotlin.ch06.p3
 
+import kotlin.math.*
+
 class Solution {
+
+    lateinit var cans: Array<IntArray>
+    var answer = 0
+    var n = 0
+
     fun solution(cans: Array<IntArray>): Int {
-        return 0
+        var wSum = 0
+        var bSum = 0
+
+        cans.forEach {
+            bSum += it[1]
+        }
+
+        init(cans)
+
+        dfs(0, wSum, bSum, 0)
+
+        return answer
+    }
+
+    private fun init(cans: Array<IntArray>) {
+        this.cans = cans
+        answer = Int.MAX_VALUE
+        n = cans.size
+    }
+
+    private fun dfs(curIndex: Int, wSum: Int, bSum: Int, depth: Int) {
+        if(depth == n / 2) {
+            answer = minOf(abs(wSum - bSum), answer)
+        } else {
+            for(i in curIndex  until n) {
+                dfs(i + 1, wSum + cans[i][0], bSum - cans[i][1], depth + 1)
+            }
+        }
     }
 }
 fun main(args: Array<String>) {
