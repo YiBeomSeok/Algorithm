@@ -2,7 +2,43 @@ package inflearn2.kotlin.ch08.p2
 
 class Solution {
     fun solution(routes: Array<IntArray>, s: Int, e: Int): Int {
-        return 0
+        val stations = HashMap<Int, MutableList<Int>>()
+
+        routes.forEachIndexed { line, value ->
+            value.forEach { station ->
+                stations[station] = stations.getOrDefault(station, mutableListOf()).apply { add(line) }
+            }
+        }
+
+        return bfs(s, e, stations, routes)
+    }
+
+    private fun bfs(s: Int, e: Int, stations: HashMap<Int, MutableList<Int>>, routes: Array<IntArray>): Int {
+        val visited = IntArray(routes.size)
+
+        val deque = ArrayDeque<Int>()
+        deque.add(s)
+
+        var depth = 0
+        while(deque.isNotEmpty()) {
+            val len = deque.size
+            repeat(len) {
+                val curStation = deque.removeFirst()
+                stations[curStation]!!.forEach {
+                    if(visited[it] != 1) {
+                        routes[it].forEach { includedStation ->
+                            if(includedStation == e) return depth
+                            deque.addLast(includedStation)
+                        }
+
+                        visited[it] = 1
+                    }
+                }
+            }
+            depth++
+        }
+
+        return -1
     }
 }
 
