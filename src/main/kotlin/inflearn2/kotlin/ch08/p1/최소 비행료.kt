@@ -1,8 +1,30 @@
 package inflearn2.kotlin.ch08.p1
 
 class Solution {
+    var answer = Int.MAX_VALUE
+
     fun solution(n: Int, flights: Array<IntArray>, s: Int, e: Int, k: Int): Int {
-        return 0
+        answer = Int.MAX_VALUE
+        val graph = Array(n) { mutableListOf<IntArray>() }
+        flights.forEach {
+            graph[it[0]].add(intArrayOf(it[1], it[2]))
+        }
+
+        dfs(0, -1, s, e, k, graph)
+
+        return if(answer == Int.MAX_VALUE) -1 else answer
+    }
+
+    private fun dfs(sumCost: Int, depth: Int, s: Int, e: Int, k: Int, graph: Array<MutableList<IntArray>>) {
+        if(sumCost > answer) return
+
+        if(depth <= k && s == e) {
+            answer = minOf(answer, sumCost)
+        } else {
+            graph[s].forEach {
+                dfs(sumCost + it[1], depth + 1, it[0], e, k, graph)
+            }
+        }
     }
 }
 
