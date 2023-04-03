@@ -1,8 +1,53 @@
 package inflearn2.kotlin.ch07.p2
 
 class Solution {
+    lateinit var visited: Array<IntArray>
+    lateinit var dx: IntArray
+
     fun solution(pool: IntArray, a: Int, b: Int, home: Int): Int {
-        return 0
+        visited = Array(10001) { IntArray(2) }
+        dx = intArrayOf(a, -b)
+        pool.forEach {
+            visited[it][0] = 1 // 점프로도 못 가
+            visited[it][1] = 1 // 백으로도 못 가
+        }
+
+        return bfs(home)
+    }
+
+    private fun bfs(home: Int): Int {
+
+        val deque = ArrayDeque<IntArray>()
+        var depth = 0
+        deque.addLast(intArrayOf(0, 1))
+
+        while(deque.isNotEmpty()) {
+
+            val size = deque.size
+            for(i in 0 until size) {
+                val curPlace = deque.removeFirst()
+                if(curPlace[0] == home) return depth
+
+                for(dir in 0 until 2) {
+                    if(dir == 1 && curPlace[1] == -1) break
+
+                    val nextPlace = curPlace[0] + dx[dir]
+
+                    if(dir == 0) {
+                        if(nextPlace > 10000 || visited[nextPlace][0] == 1) continue
+                        visited[nextPlace][0] = 1
+                        deque.addLast(intArrayOf(nextPlace, 1))
+                    } else {
+                        if(nextPlace < 0 || visited[nextPlace][1] == 1) continue
+                        visited[nextPlace][1] = 1
+                        deque.addLast(intArrayOf(nextPlace, -1))
+                    }
+                }
+            }
+            depth++
+        }
+
+        return -1
     }
 }
 
