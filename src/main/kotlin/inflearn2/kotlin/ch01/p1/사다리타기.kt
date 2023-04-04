@@ -2,18 +2,16 @@ package inflearn2.kotlin.ch01.p1
 
 class Solution {
     fun solution(n: Int, ladder: Array<IntArray>): CharArray {
-        val answer = CharArray(n) { ' ' }
-        for(i in 0 until n) {
-            answer[i] = 'A' + i
-        }
+        val answer = CharArray(n) { 'A' + it }
 
-        for(line in ladder) {
-            for(x in line) {
-                val tmp = answer[x]
-                answer[x] = answer[x - 1]
-                answer[x - 1] = tmp
+        ladder.forEach { info ->
+            info.forEach {
+                val tmp = answer[it - 1]
+                answer[it - 1] = answer[it]
+                answer[it] = tmp
             }
         }
+
         return answer
     }
 }
