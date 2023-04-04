@@ -34,10 +34,7 @@ class Solution {
 
     private fun canFormBinaryTree(parent: Char, binaryString: String): Int {
         if (binaryString.length == 1) {
-            return if (binaryString[0] == '1') {
-                if (parent == '0') 0
-                else 1
-            } else 1
+            return if (binaryString[0] == '1' && parent == '0') 0 else 1
         }
 
         val midIndex = binaryString.length / 2
@@ -46,12 +43,12 @@ class Solution {
         if (mid == '1' && parent == '0') return 0
 
         val leftSubtree = binaryString.substring(0, midIndex)
-        val rightSubtree = binaryString.substring(midIndex + 1, binaryString.length)
+        val rightSubtree = binaryString.substring(midIndex + 1)
 
-        if (canFormBinaryTree(mid, leftSubtree) == 0 || canFormBinaryTree(mid, rightSubtree) == 0) {
-            return 0
-        }
+        val canFormLeftSubtree = canFormBinaryTree(mid, leftSubtree)
+        val canFormRightSubtree = canFormBinaryTree(mid, rightSubtree)
 
-        return 1
+        return if (canFormLeftSubtree == 0 || canFormRightSubtree == 0) 0 else 1
     }
+
 }
