@@ -1,93 +1,53 @@
 package inflearn2.kotlin.ch01.p6
+
 class Solution {
     fun solution(fruit: Array<IntArray>): Int {
         var answer = 0
         val n = fruit.size
-        val check = IntArray(n)
-
+        val ch = IntArray(n)
         for (i in 0 until n) {
-            if(check[i] == 1) continue
-
-            // i의 최소 과일이 무엇인지 확인
-            //
-            // i의 최소값이 1개인지 확인
-            var iMinIndex = 0
-            for(iSub in 1 until 3) {
-                if(fruit[i][iSub] < fruit[i][iMinIndex]) {
-                    iMinIndex = iSub
-                }
-            }
-            var isUnique = 0
-            for(iSub in 0 until 3) {
-                if(fruit[i][iSub] == fruit[i][iMinIndex]) {
-                    isUnique++
-                }
-            }
-            if(isUnique > 1) {
-                answer += fruit[i][iMinIndex]
-                check[i]++
-                continue
-            }
-
+            if (ch[i] == 1) continue
+            if (!isMinUnique(fruit[i])) continue
             for (j in i + 1 until n) {
-                if(check[j] == 1) continue
-                if(check[i] == 1) break
-
-                // j의 최소 과일이 무엇인지 확인
-                //
-                // j의 최소값이 1개인지 확인
-                var jMinIndex = 0
-                for(jSub in 1 until 3) {
-                    if(fruit[j][jSub] < fruit[j][jMinIndex]) {
-                        jMinIndex = jSub
+                if (ch[j] == 1) continue
+                if (!isMinUnique(fruit[j])) continue
+                val a = getMinIndex(fruit[i])
+                val b = getMinIndex(fruit[j])
+                if (a != b && fruit[i][b] > 0 && fruit[j][a] > 0) {
+                    if (fruit[i][a] + 1 <= fruit[i][b] - 1 && fruit[j][b] + 1 <= fruit[j][a] - 1) {
+                        fruit[i][a]++
+                        fruit[i][b]--
+                        fruit[j][b]++
+                        fruit[j][a]--
+                        ch[i] = 1
+                        ch[j] = 1
+                        break
                     }
                 }
-                isUnique = 0
-                for(jSub in 0 until 3) {
-                    if(fruit[j][jSub] == fruit[j][jMinIndex]) {
-                        isUnique++
-                    }
-                }
-                if(isUnique > 1) {
-                    answer += fruit[j][jMinIndex]
-                    check[j]++
-                    continue
-                }
-
-                // i의 최소 과일과 j의 최소 과일이 다른지 확인
-                if(iMinIndex == jMinIndex) continue
-
-                // 교환 해보기
-                fruit[i][jMinIndex]--
-                fruit[i][iMinIndex]++
-                fruit[j][iMinIndex]--
-                fruit[j][jMinIndex]++
-
-                // 교환 후
-                // i의 현재 최소값을 확인해서 원래 최소값보다 증가했는지 확인
-                // j의 현재 최소값을 확인해서 원래 최소값보다 증가했는지 확인
-                if(fruit[i][jMinIndex] < fruit[i][iMinIndex] ||
-                    fruit[j][iMinIndex] < fruit[j][jMinIndex]) {
-                    fruit[i][jMinIndex]++
-                    fruit[i][iMinIndex]--
-                    fruit[j][iMinIndex]++
-                    fruit[j][jMinIndex]--
-
-                    continue
-                }
-
-                answer += fruit[i][iMinIndex] + fruit[j][jMinIndex]
-                check[i] = 1
-                check[j] = 1
             }
-
-            if(check[i] == 0) {
-                answer += fruit[i][iMinIndex]
-            }
-            check[i] = 1
         }
-
+        for (x in fruit) {
+            answer += getMin(x)
+        }
         return answer
+    }
+
+    private fun getMin(fruit: IntArray): Int {
+        var min = 100
+        for (x in fruit) {
+            min = minOf(min, x)
+        }
+        return min
+    }
+
+    private fun isMinUnique(fruit: IntArray): Boolean {
+        val min = getMin(fruit)
+        return fruit.count { it == min } == 1
+    }
+
+    private fun getMinIndex(fruit: IntArray): Int {
+        val min = getMin(fruit)
+        return fruit.indexOfFirst { it == min }
     }
 }
 
