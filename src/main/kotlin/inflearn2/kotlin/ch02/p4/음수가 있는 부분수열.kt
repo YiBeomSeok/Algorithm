@@ -4,17 +4,17 @@ class Solution {
     fun solution(nums: IntArray, m: Int): Int {
         var answer = 0
 
-        val hashMap = HashMap<Int, Int>()
-        hashMap[0] = 1
+        val sums = HashMap<Int, Int>()
+        sums[0] = 1
+
         var sum = 0
-
-        for(i in nums.indices) {
-            sum += nums[i]
-
-            answer += hashMap.getOrDefault(sum - m, 0)
-            hashMap[sum] = hashMap.getOrDefault(sum, 0) + 1
+        nums.forEach {
+            sum += it
+            with(sums.getOrDefault(sum, 0)) {
+                answer += this
+                sums[sum] = this + 1
+            }
         }
-
         return answer
     }
 }
