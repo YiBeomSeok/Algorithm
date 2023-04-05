@@ -3,8 +3,28 @@ package inflearn2.kotlin.ch01.p8
 import java.util.*
 
 class Solution {
-    fun solution(enter: IntArray?, exit: IntArray?): IntArray {
-        return intArrayOf()
+    fun solution(enter: IntArray, exit: IntArray): IntArray {
+        val meets = Array(enter.size + 1) { HashSet<Int>() }
+        val room = mutableListOf<Int>()
+
+        var enIdx = 0
+        var exIdx = 0
+        while (enIdx < enter.size && exIdx < exit.size) {
+
+            while (!room.contains(exit[exIdx])) {
+                room.forEach {
+                    meets[it].add(enter[enIdx])
+                    meets[enter[enIdx]].add(it)
+                }
+                room.add(enter[enIdx])
+
+                enIdx++
+            }
+            room.remove(exit[exIdx])
+            exIdx++
+        }
+
+        return IntArray(enter.size) { meets[it + 1].size }
     }
 }
 
