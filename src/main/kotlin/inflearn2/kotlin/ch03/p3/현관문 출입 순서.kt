@@ -5,53 +5,49 @@ import java.util.*
 class Solution {
     fun solution(arrival: IntArray, state: IntArray): IntArray {
         val n = arrival.size
-        val enter = ArrayDeque<Int>()
-        val exit = ArrayDeque<Int>()
-        var prev = 1
+
         val answer = IntArray(n)
+        val enterQueue = ArrayDeque<Int>()
+        val exitQueue = ArrayDeque<Int>()
 
-        var t = 0
-        var i = 0
-        var cnt = 0
-        while(true) {
-            if(enter.isEmpty() && exit.isEmpty() && i < n) {
-                if(t < arrival[i]) {
-                    t = arrival[i]
-                    prev = 1
+        var curTime = 0
+        var prevState = 1
+        var arrivalIndex = 0
+        var count = 0
+        while (true) {
+            if (enterQueue.isEmpty() && exitQueue.isEmpty() && arrivalIndex < n) {
+                if (curTime < arrival[arrivalIndex]) {
+                    curTime = arrival[arrivalIndex]
+                    prevState = 1
                 }
             }
 
-            while(i < n && arrival[i] <= t) {
-                if(state[i] == 0) enter.addLast(i)
-                else exit.addLast(i)
-                i++
+            while (arrivalIndex < n && arrival[arrivalIndex] <= curTime) {
+                when (state[arrivalIndex]) {
+                    0 -> enterQueue.addLast(arrivalIndex)
+                    1 -> exitQueue.addLast(arrivalIndex)
+                }
+                arrivalIndex++
             }
 
-            if(prev == 1) {
-                if(exit.isNotEmpty()) {
-                    answer[exit.removeFirst()] = t
-                    prev = 1
-                }
-                else {
-                    answer[enter.removeFirst()] = t
-                    prev = 0
-                }
-            } else if(prev == 0) {
-                if(enter.isNotEmpty()) {
-                    answer[enter.removeFirst()] = t
-                    prev = 0
+            if (enterQueue.isEmpty()) {
+                answer[exitQueue.removeFirst()] = curTime
+                prevState = 1
+            } else if (exitQueue.isEmpty()) {
+                answer[enterQueue.removeFirst()] = curTime
+                prevState = 0
+            } else {
+                if (prevState == 0) {
+                    answer[enterQueue.removeFirst()] = curTime
                 } else {
-                    answer[exit.removeFirst()] = t
-                    prev = 1
+                    answer[exitQueue.removeFirst()] = curTime
                 }
             }
-            cnt++
-            if(cnt == n) break
-            //
-            t++
+
+            count++
+            curTime++
+            if (count == n) break
         }
-
-
 
         return answer
     }
