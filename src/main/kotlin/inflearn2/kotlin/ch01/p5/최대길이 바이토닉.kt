@@ -1,41 +1,26 @@
 package inflearn2.kotlin.ch01.p5
 
-
 class Solution {
     fun solution(nums: IntArray): Int {
         var answer = 0
+
         val peaks = mutableListOf<Int>()
 
         for(i in 1 until nums.size - 1) {
-            if(nums[i] > nums[i - 1] && nums[i] > nums[i + 1]) {
-                peaks.add(i)
-            }
+            if(nums[i - 1] < nums[i] && nums[i] > nums[i + 1]) peaks.add(i)
         }
 
-        for(peakIndex in peaks) {
-            var curPeakCount = 1
-            var l = peakIndex - 1
-            var r = peakIndex + 1
-
-            while(l >= 0) {
-                if(nums[l] < nums[l + 1]){
-                    curPeakCount++
-                } else {
-                    break
-                }
-                l--
+        peaks.forEach {
+            var curCnt = 1
+            for(i in it downTo 1) {
+                if(nums[i] > nums[i - 1]) curCnt++
+                else break
             }
-
-            while(r < nums.size) {
-                if(nums[r] < nums[r - 1]) {
-                    curPeakCount++
-                } else {
-                    break
-                }
-                r++
+            for (i in it until nums.size - 1) {
+                if(nums[i] > nums[i + 1]) curCnt++
+                else break
             }
-
-            answer = maxOf(answer, curPeakCount)
+            answer = maxOf(answer, curCnt)
         }
 
         return answer
