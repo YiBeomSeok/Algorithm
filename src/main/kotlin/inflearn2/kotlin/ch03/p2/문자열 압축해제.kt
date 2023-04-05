@@ -8,28 +8,21 @@ class Solution {
         var answer = ""
 
         s.forEach {
-            if(it == ')') {
+            if (it == ')') {
                 var tmp = ""
-                while(stack.isNotEmpty()) {
-                    val c = stack.pop()
-                    if(c == "(") {
-                        var num = ""
-                        while(stack.isNotEmpty() && stack.peek()[0].isDigit()) {
-                            num = stack.pop() + num
-                        }
-                        var res = ""
-                        var cnt = 0
-                        if(num == "") cnt = 1
-                        else cnt = num.toInt()
-
-                        for(i in 0 until cnt) {
-                            res += tmp
-                        }
-
-                        stack.push(res)
-                        break
+                while (true) {
+                    val ch = stack.pop()
+                    if (ch == "(") break
+                    tmp = "$ch$tmp"
+                }
+                var res = ""
+                if (stack.peek()[0].isDigit()) {
+                    repeat(stack.pop().toInt()) {
+                        res = "$tmp$res"
                     }
-                    tmp = c + tmp
+                    stack.push(res)
+                } else {
+                    stack.push(tmp)
                 }
             } else {
                 stack.push("$it")
