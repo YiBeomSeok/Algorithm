@@ -9,14 +9,14 @@ class Solution {
 
         var totalTime = k
 
-        for(i in 1 until sortedTasks.size) {
+        for (i in 1 until sortedTasks.size) {
             val time = rest * (sortedTasks[i] - sortedTasks[i - 1])
             if (totalTime < time) {
                 val idx = totalTime % rest
                 var cnt = 0L
-                for(j in tasks.indices) {
-                    if(tasks[j] >= sortedTasks[i]) {
-                        if(cnt == idx) return j + 1
+                for (j in tasks.indices) {
+                    if (tasks[j] >= sortedTasks[i]) {
+                        if (cnt == idx) return j + 1
                         cnt++
                     }
                 }
