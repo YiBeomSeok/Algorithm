@@ -1,47 +1,35 @@
+import java.io.*
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.collections.HashSet
+
+val br = BufferedReader(InputStreamReader(System.`in`))
 
 fun main() {
-    val scanner = Scanner(System.`in`)
-    val n = scanner.nextInt() // 문제의 수
-    val m = scanner.nextInt() // 정보의 개수
-    val problemMap = HashMap<Int, MutableList<Int>>() // 문제 정보를 저장하는 맵
-    val problemDegree = IntArray(n + 1) { 0 } // 각 문제의 진입 차수를 저장하는 배열
-    
-    for (i in 1..n) {
-        problemMap[i] = ArrayList()
+    val (n, m) = br.readLine().split(" ").map { it.toInt() }
+
+    val problems = Array(n + 1) { mutableListOf<Int>() }
+    val indegree = IntArray(n + 1)
+    repeat(m) {
+        val (from, to) = br.readLine().split(" ").map { it.toInt() }
+        problems[from].add(to)
+        indegree[to]++
     }
-    
-    for (i in 0 until m) {
-        val a = scanner.nextInt()
-        val b = scanner.nextInt()
-        problemMap[a]?.add(b)
-        problemDegree[b]++
+
+    val order = mutableListOf<Int>()
+    val deque = PriorityQueue<Int>()
+    for(i in 1 until indegree.size) {
+        if (indegree[i] == 0)
+            deque.offer(i)
     }
-    
-    val priorityQueue = PriorityQueue<Int>() // 우선순위 큐
-    val answerList = ArrayList<Int>() // 정답 리스트
-    
-    for (i in 1..n) {
-        if (problemDegree[i] == 0) { // 진입 차수가 0인 문제를 우선순위 큐에 추가
-            priorityQueue.offer(i)
+
+    while(deque.isNotEmpty()) {
+        val curFrom = deque.poll()
+        order.add(curFrom)
+        problems[curFrom].forEach { to ->
+            indegree[to]--
+            if(indegree[to] == 0)
+                deque.offer(to)
         }
     }
-    
-    while (priorityQueue.isNotEmpty()) {
-        val currentProblem = priorityQueue.poll()
-        answerList.add(currentProblem)
-        for (nextProblem in problemMap[currentProblem]!!) {
-            problemDegree[nextProblem]--
-            if (problemDegree[nextProblem] == 0) { // 진입 차수가 0이 되면 우선순위 큐에 추가
-                priorityQueue.offer(nextProblem)
-            }
-        }
-    }
-    
-    for (i in answerList) {
-        print("$i ")
-    }
+
+    order.forEach { print("$it ") }
 }
