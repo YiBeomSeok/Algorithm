@@ -1,18 +1,20 @@
 import java.util.*
+import java.io.*
 
 fun main() {
-    val scanner = Scanner(System.`in`)
-    val n = scanner.nextInt() // 보석의 개수
-    val k = scanner.nextInt() // 가방의 개수
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val (n, k) = br.readLine().split(" ").map { it.toInt() }
     val jewelries = mutableListOf<Pair<Int, Int>>() // 보석 정보를 저장하는 리스트
     val bags = mutableListOf<Int>() // 가방 정보를 저장하는 리스트
 
     for (i in 0 until n) {
-        jewelries.add(Pair(scanner.nextInt(), scanner.nextInt()))
+        with(br.readLine().split(" ").map { it.toInt() }) {
+            jewelries.add(Pair(this[0], this[1]))   
+        }
     }
 
     for (i in 0 until k) {
-        bags.add(scanner.nextInt())
+        bags.add(br.readLine().toInt())
     }
 
     jewelries.sortBy { it.first }
