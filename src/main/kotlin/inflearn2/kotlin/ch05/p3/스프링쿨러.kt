@@ -4,25 +4,29 @@ import java.util.*
 
 class Solution {
     fun solution(n: Int, nums: IntArray): Int {
-        val pq = PriorityQueue<Int>(compareByDescending { it })
-        nums.forEach {
-            pq.offer(it)
+
+        val sprinklers = Array(n) {
+            val left = if (it - nums[it] < 0) 0 else it - nums[it]
+            val right = if (it + nums[it] > n) n else it + nums[it]
+            intArrayOf(left, right)
+        }.apply {
+            sortWith(compareBy<IntArray> { it[0] }.thenBy { it[1] })
         }
 
-        var i = 0
         var count = 0
-        while(i < n) {
-            if(i + nums[i] >= n - 1) break
-            val next = if(i + pq.peek() >= n) n - 1 else i + pq.peek()
-            for(j in next downTo i) {
-                if(j - nums[j] <= i) {
-                    i = j
-                    count++
-                    pq.remove(nums[j])
-                    break
-                }
-                if(j == i && nums[i] == 0) return -1
+        var start = 0
+        var end = 0
+        var index = 0
+        while(index < sprinklers.size){
+            while(index < sprinklers.size && sprinklers[index][0] <= start) {
+                end = maxOf(end, sprinklers[index][1])
+                index++
             }
+            count++
+
+            if(end == n) return count
+            if(start == end) return -1
+            start = end
         }
 
         return count
