@@ -1,36 +1,46 @@
+import java.util.*
+
 class Solution {
-    fun solution(n: Int, s: Int, a: Int, b: Int, fares: Array<IntArray>): Int {
-        val INF = Int.MAX_VALUE / 3 - 1
+    data class Edge(val to: Int, val weight: Int)
 
-        // 인접 행렬 초기화
-        val dist = Array(n + 1) { IntArray(n + 1) { INF } }
-        for (i in 1..n) {
-            dist[i][i] = 0
-        }
-        fares.forEach { (u, v, w) ->
-            dist[u][v] = w
-            dist[v][u] = w
-        }
+    private fun dijkstra(start: Int, graph: Array<MutableList<Edge>>): IntArray {
+        val n = graph.size
+        val dist = IntArray(n) { Int.MAX_VALUE }
+        val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue(compareBy { it.second })
+        dist[start] = 0
+        pq.offer(Pair(start, 0))
 
-        // 플로이드-와샬 알고리즘
-        for (k in 1..n) {
-            for (i in 1..n) {
-                for (j in 1..n) {
-                    if (dist[i][j] > dist[i][k] + dist[k][j]) {
-                        dist[i][j] = dist[i][k] + dist[k][j]
-                    }
+        while (!pq.isEmpty()) {
+            val (cur, curDist) = pq.poll()
+            if (dist[cur] < curDist) continue
+            for (edge in graph[cur]) {
+                val next = edge.to
+                val nextDist = curDist + edge.weight
+                if (dist[next] > nextDist) {
+                    dist[next] = nextDist
+                    pq.offer(Pair(next, nextDist))
                 }
             }
         }
+        return dist
+    }
 
-        // 출발점에서 A, B 지점으로 따로 갈 때의 요금
-        var answer = dist[s][a] + dist[s][b]
-
-        // 출발점에서 중간 지점을 거쳐 A, B 지점으로 같이 갈 때의 요금
-        for (i in 1..n) {
-            answer = minOf(answer, dist[s][i] + dist[i][a] + dist[i][b])
+    fun solution(n: Int, s: Int, a: Int, b: Int, fares: Array<IntArray>): Int {
+        val graph = Array(n + 1) { mutableListOf<Edge>() }
+        for (fare in fares) {
+            val (from, to, weight) = fare
+            graph[from].add(Edge(to, weight))
+            graph[to].add(Edge(from, weight))
         }
 
+        val distFromS = dijkstra(s, graph)
+        val distFromA = dijkstra(a, graph)
+        val distFromB = dijkstra(b, graph)
+
+        var answer = Int.MAX_VALUE
+        for (i in 1..n) {
+            answer = minOf(answer, distFromS[i] + distFromA[i] + distFromB[i])
+        }
         return answer
     }
 }
