@@ -1,10 +1,13 @@
-class Stage(val number: Int, var fail: Int, var success: Int, var rate: Double)
+class Stage(val number: Int, var fail: Int, var success: Int) {
+    val rate: Float
+    get() = if(fail + success == 0) 0.0f else fail.toFloat() / (fail.toFloat() + success.toFloat())
+}
 
 class Solution {
     fun solution(N: Int, stages: IntArray): IntArray {
         var answer = intArrayOf()
         
-        val allStage = Array(N) { Stage(it + 1, 0, 0, 0.0) }
+        val allStage = Array(N) { Stage(it + 1, 0, 0) }
         
         stages.forEach {
             for(i in 0 until it - 1) {
@@ -15,12 +18,6 @@ class Solution {
             }
         }
         
-        allStage.forEach { 
-            val tryCount = it.fail + it.success
-            it.rate = if(tryCount == 0) 0.0 else it.fail.toDouble() / tryCount.toDouble()
-        }
-        answer = allStage.sortedByDescending { it.rate }.map { it.number }.toIntArray()
-        
-        return answer
+        return allStage.sortedByDescending { it.rate }.map { it.number }.toIntArray()
     }
 }
