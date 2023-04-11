@@ -2,15 +2,13 @@ package inflearn2.kotlin.ch04.p6
 
 class Solution {
     fun solution(tasks: IntArray, k: Long): Int {
-        var answer = 0
-
         val sortedTasks = tasks.copyOf(tasks.size + 1).apply { sort() }
         var rest = tasks.size
 
         var totalTime = k
 
         for (i in 1 until sortedTasks.size) {
-            val time = rest * (sortedTasks[i] - sortedTasks[i - 1])
+            val time = rest.toLong() * (sortedTasks[i] - sortedTasks[i - 1]).toLong()
             if (totalTime < time) {
                 val idx = totalTime % rest
                 var cnt = 0L
