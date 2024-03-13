@@ -56,7 +56,7 @@ class `변환`() {
         number.groupBy { i -> if (i > 3) "4이상" else "3이하" }.forEach { println(it) }
 
         // key, value 값 사용 가능
-        number.groupBy { i -> if (i > 3) "4이상" else "3이하" }.forEach { (key, i) -> println("Key : $key Value : $i") }
+        number.groupBy { i -> if (i > 3) "4이상" else "3이하" }.forEach { (key, value) -> println("Key : $key Value : $value") }
     }
 }
 

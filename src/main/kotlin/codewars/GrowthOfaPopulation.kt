@@ -1,4 +1,4 @@
-package codewards
+package codewars
 
 fun nbYear(pp0: Int, percent: Double, aug: Int, p: Int): Int {
 
